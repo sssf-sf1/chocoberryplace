@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Наборы - Chocoberry Place</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Общие стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #fff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #8a2b3d;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: #d64b6e;
+        }
+        
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Шапка сайта */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #8a2b3d;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: #d64b6e;
+        }
+        
+        .search-cart {
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-right: 20px;
+        }
+        
+        .search-box input {
+            padding: 10px 15px;
+            padding-right: 40px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            width: 250px;
+            font-size: 14px;
+        }
+        
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+        
+        .cart-btn {
+            background-color: #8a2b3d;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+        }
+        
+        .cart-btn:hover {
+            background-color: #a53a52;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .cart-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Навигационное меню */
+        nav {
+            background-color: #f8f0f2;
+            padding: 10px 0;
+        }
+        
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin: 0 15px;
+        }
+        
+        .nav-menu a {
+            color: #8a2b3d;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            background-color: rgba(214, 75, 110, 0.1);
+        }
+        
+        .nav-menu a.active {
+            background-color: rgba(214, 75, 110, 0.2);
+            font-weight: 600;
+        }
+        
+        /* Хлебные крошки */
+        .breadcrumbs {
+            padding: 20px 0;
+            font-size: 14px;
+            color: #777;
+        }
+        
+        .breadcrumbs a {
+            color: #8a2b3d;
+        }
+        
+        .breadcrumbs span {
+            margin: 0 5px;
+        }
+        
+        /* Заголовок страницы */
+        .page-header {
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: 36px;
+            color: #8a2b3d;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #d64b6e;
+        }
+        
+        .page-subtitle {
+            font-size: 18px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* ГОРИЗОНТАЛЬНЫЕ ФИЛЬТРЫ */
+        .horizontal-filters {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .filters-title {
+            font-size: 20px;
+            color: #8a2b3d;
+            font-weight: 600;
+        }
+        
+        .filter-sections {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: flex-end;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 180px;
+        }
+        
+        .filter-label {
+            font-size: 14px;
+            color: #8a2b3d;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            background-color: #f8f0f2;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .filter-option:hover {
+            background-color: #e8d0d6;
+        }
+        
+        .filter-option.active {
+            background-color: #8a2b3d;
+            color: white;
+            border-color: #8a2b3d;
+        }
+        
+        .filter-option input {
+            display: none;
+        }
+        
+        .price-range {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .price-input {
+            width: 100px;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .price-separator {
+            color: #888;
+        }
+        
+        .apply-filters {
+            background-color: #8a2b3d;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        .reset-filters {
+            background-color: #f8f0f2;
+            color: #8a2b3d;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        /* Товары */
+        .products-section {
+            padding: 20px 0 50px;
+        }
+        
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .products-count {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .sort-options {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sort-options select {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+            font-size: 14px;
+        }
+        
+        /* АДАПТИВНАЯ СЕТКА ТОВАРОВ */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 колонки по умолчанию */
+            gap: 25px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: #f9e6eb;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #d64b6e;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #8a2b3d;
+        }
+        
+        .product-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            height: 40px;
+            overflow: hidden;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: #d64b6e;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .product-btn {
+            background-color: #8a2b3d;
+            color: white;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .product-btn:hover {
+            background-color: #a53a52;
+        }
+        
+        /* Пагинация */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .pagination-list {
+            display: flex;
+            list-style: none;
+            gap: 10px;
+        }
+        
+        .pagination-item a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            color: #8a2b3d;
+        }
+        
+        .pagination-item.active a {
+            background-color: #8a2b3d;
+            color: white;
+            border-color: #8a2b3d;
+        }
+        
+        .pagination-item a:hover {
+            background-color: rgba(138, 43, 61, 0.1);
+        }
+        
+        /* Подвал */
+        footer {
+            background-color: #8a2b3d;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: #d64b6e;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #f9e6eb;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: #d64b6e;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+        
+        /* Адаптивность для горизонтальных фильтров */
+        @media (max-width: 1200px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .filter-sections {
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .search-box input {
+                width: 200px;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .filter-sections {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 15px;
+            }
+            
+            .filter-group {
+                min-width: auto;
+            }
+            
+            .filters-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-cart {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+            }
+            
+            .products-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .horizontal-filters {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .search-box {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+            
+            .cart-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-menu li {
+                margin: 5px 0;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-title {
+                font-size: 28px;
+            }
+            
+            .page-subtitle {
+                font-size: 16px;
+            }
+            
+            .filter-options {
+                flex-wrap: wrap;
+            }
+            
+            .price-range {
+                flex-wrap: wrap;
+            }
+            
+            .price-input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <i class="fas fa-stroopwafel"></i>
+                     <li><a href="index.html">chocoberry place</a></li>
+                </div>
+                <div class="search-cart">
+                    <div class="search-box">
+                        <input type="text" placeholder="Поиск товаров...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <a href="cart.html" class="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        Корзина
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <nav>
+            <div class="container">
+                <ul class="nav-menu">
+                    <li><a href="#" class="active">Наборы</a></li>
+                    <li><a href="bouquets.html">Букеты</a></li>
+                    <li><a href="#">Детям</a></li>
+                    <li><a href="#">Мужчинам</a></li>
+                    <li><a href="#">На 8 марта</a></li>
+                    <li><a href="#">На 14 февраля</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Хлебные крошки -->
+    <div class="container">
+        <div class="breadcrumbs">
+            <a href="index.html">Главная</a> <span>></span> <a href="#">Каталог</a> <span>></span> <span>Наборы</span>
+        </div>
+    </div>
+
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Наборы клубники в шоколаде</h1>
+            <p class="page-subtitle">Широкий выбор изысканных наборов для любого повода. Свежая клубника и бельгийский шоколад высшего качества.</p>
+        </div>
+    </section>
+
+    <!-- Горизонтальные фильтры -->
+    <section class="horizontal-filters">
+        <div class="container">
+            <div class="filters-header">
+                <h2 class="filters-title">Фильтры</h2>
+                <div class="filter-actions">
+                    <button class="apply-filters" id="applyFilters">Применить</button>
+                    <button class="reset-filters" id="resetFilters">Сбросить</button>
+                </div>
+            </div>
+            
+            <div class="filter-sections">
+                <!-- Категории -->
+                <div class="filter-group">
+                    <label class="filter-label">Категории</label>
+                    <div class="filter-options">
+                        <div class="filter-option active" data-filter="category" data-value="classic">
+                            <input type="checkbox" id="categoryClassic" checked>
+                            <label for="categoryClassic">Классические</label>
+                        </div>
+                        <div class="filter-option" data-filter="category" data-value="festive">
+                            <input type="checkbox" id="categoryFestive">
+                            <label for="categoryFestive">Праздничные</label>
+                        </div>
+                        <div class="filter-option" data-filter="category" data-value="gift">
+                            <input type="checkbox" id="categoryGift">
+                            <label for="categoryGift">Подарочные</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Цена -->
+                <div class="filter-group">
+                    <label class="filter-label">Цена, ₽</label>
+                    <div class="price-range">
+                        <input type="number" class="price-input" id="priceMin" placeholder="500" value="500">
+                        <span class="price-separator">-</span>
+                        <input type="number" class="price-input" id="priceMax" placeholder="5000" value="5000">
+                    </div>
+                </div>
+                
+                <!-- Вес -->
+                <div class="filter-group">
+                    <label class="filter-label">Вес</label>
+                    <div class="filter-options">
+                        <div class="filter-option" data-filter="weight" data-value="small">
+                            <input type="checkbox" id="weightSmall">
+                            <label for="weightSmall">До 500 г</label>
+                        </div>
+                        <div class="filter-option active" data-filter="weight" data-value="medium">
+                            <input type="checkbox" id="weightMedium" checked>
+                            <label for="weightMedium">500-1000 г</label>
+                        </div>
+                        <div class="filter-option" data-filter="weight" data-value="large">
+                            <input type="checkbox" id="weightLarge">
+                            <label for="weightLarge">Более 1000 г</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Тип шоколада -->
+                <div class="filter-group">
+                    <label class="filter-label">Тип шоколада</label>
+                    <div class="filter-options">
+                        <div class="filter-option active" data-filter="chocolate" data-value="milk">
+                            <input type="checkbox" id="chocolateMilk" checked>
+                            <label for="chocolateMilk">Молочный</label>
+                        </div>
+                        <div class="filter-option active" data-filter="chocolate" data-value="dark">
+                            <input type="checkbox" id="chocolateDark" checked>
+                            <label for="chocolateDark">Тёмный</label>
+                        </div>
+                        <div class="filter-option" data-filter="chocolate" data-value="white">
+                            <input type="checkbox" id="chocolateWhite">
+                            <label for="chocolateWhite">Белый</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Товары -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-header">
+                <div class="products-count" id="productsCount">Найдено 24 товара</div>
+                <div class="sort-options">
+                    <span>Сортировать:</span>
+                    <select id="sortSelect">
+                        <option value="popular">По популярности</option>
+                        <option value="price-asc">По возрастанию цены</option>
+                        <option value="price-desc">По убыванию цены</option>
+                        <option value="new">По новизне</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="products-grid" id="productsGrid">
+                <!-- Карточка товара 1 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('images/product-romantic.jpg')">
+                        <div class="product-badge">Хит</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Романтический сюрприз</h3>
+                        <p class="product-description">Нежный набор с клубникой в молочном и тёмном шоколаде</p>
+                        <div class="product-price">2 490 ₽</div>
+                        <button class="product-btn">В корзину</button>
+                    </div>
+                </div>
+                
+                <!-- Карточка товара 2 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('images/product-sweet.jpg')">
+                        <div class="product-badge">Новинка</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Сладкое наслаждение</h3>
+                        <p class="product-description">Набор с клубникой в белом шоколаде и кокосовой стружке</p>
+                        <div class="product-price">1 890 ₽</div>
+                        <button class="product-btn">В корзину</button>
+                    </div>
+                </div>
+                
+                <!-- Карточка товара 3 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('images/product-fruit.jpg')"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Фруктовый микс</h3>
+                        <p class="product-description">Клубника, бананы и апельсины в разных видах шоколада</p>
+                        <div class="product-price">2 190 ₽</div>
+                        <button class="product-btn">В корзину</button>
+                    </div>
+                </div>
+                
+                <!-- Карточка товара 4 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('images/product-festive.jpg')">
+                        <div class="product-badge">Хит</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Праздничный букет</h3>
+                        <p class="product-description">Элегантная композиция из клубники в шоколаде</p>
+                        <div class="product-price">3 290 ₽</div>
+                        <button class="product-btn">В корзину</button>
+                    </div>
+                </div>
+                
+                <!-- Карточка товара 5 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('images/product-chocolate-fantasy.jpg')"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Шоколадная фантазия</h3>
+                        <p class="product-description">Набор с разнообразными топпингами и посыпками</p>
+                        <div class="product-price">2 650 ₽</div>
+                        <button class="product-btn">В корзину</button>
+                    </div>
+                </div>
+                
+                <!-- Карточка товара 6 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('images/product-mini-set.jpg')"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Мини набор</h3>
+                        <p class="product-description">Небольшой набор для одного или небольшого подарка</p>
+                        <div class="product-price">1 250 ₽</div>
+                        <button class="product-btn">В корзину</button>
+                    </div>
+                </div>
+                
+                <!-- Карточка товара 7 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('images/product-nut-delight.jpg')"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Ореховый восторг</h3>
+                        <p class="product-description">Клубника в шоколаде с миндалем, фундуком и грецким орехом</p>
+                        <div class="product-price">2 850 ₽</div>
+                        <button class="product-btn">В корзину</button>
+                    </div>
+                </div>
+                
+                <!-- Карточка товара 8 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('images/product-family-set.jpg')">
+                        <div class="product-badge">Акция</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Семейный набор</h3>
+                        <p class="product-description">Большой набор для всей семьи или компании друзей</p>
+                        <div class="product-price">3 990 ₽</div>
+                        <button class="product-btn">В корзину</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Пагинация -->
+            <div class="pagination">
+                <ul class="pagination-list">
+                    <li class="pagination-item"><a href="#"><i class="fas fa-chevron-left"></i></a></li>
+                    <li class="pagination-item active"><a href="#">1</a></li>
+                    <li class="pagination-item"><a href="#">2</a></li>
+                    <li class="pagination-item"><a href="#">3</a></li>
+                    <li class="pagination-item"><a href="#"><i class="fas fa-chevron-right"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О нас</h3>
+                    <p>Chocoberry Place — создаём сладкие моменты вашей жизни с 2015 года.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Мену</h3>
+                    <ul>
+                        <li><a href="#">Наборы</a></li>
+                        <li><a href="bouquets.html">Букеты</a></li>
+                        <li><a href="#">Детям</a></li>
+                        <li><a href="#">Мужчинам</a></li>
+                        <li><a href="#">На 8 марта</a></li>
+                        <li><a href="#">На 14 февраля</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +7 (495) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@chocoberry.ru</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Сладкая, д. 25</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Часы работы</h3>
+                    <ul>
+                        <li>Пн-Пт: 9:00 - 21:00</li>
+                        <li>Сб-Вс: 10:00 - 20:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Chocoberry Place. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Данные товаров
+        const products = [
+            { id: 1, title: "Романтический сюрприз", price: 2490, category: "classic", weight: "medium", chocolate: ["milk", "dark"], popular: true },
+            { id: 2, title: "Сладкое наслаждение", price: 1890, category: "classic", weight: "small", chocolate: ["white"], popular: false },
+            { id: 3, title: "Фруктовый микс", price: 2190, category: "classic", weight: "medium", chocolate: ["milk", "dark", "white"], popular: false },
+            { id: 4, title: "Праздничный букет", price: 3290, category: "festive", weight: "large", chocolate: ["milk", "dark"], popular: true },
+            { id: 5, title: "Шоколадная фантазия", price: 2650, category: "classic", weight: "medium", chocolate: ["milk", "dark"], popular: false },
+            { id: 6, title: "Мини набор", price: 1250, category: "gift", weight: "small", chocolate: ["milk"], popular: false },
+            { id: 7, title: "Ореховый восторг", price: 2850, category: "classic", weight: "medium", chocolate: ["milk", "dark"], popular: false },
+            { id: 8, title: "Семейный набор", price: 3990, category: "gift", weight: "large", chocolate: ["milk", "dark", "white"], popular: true }
+        ];
+
+        // Элементы DOM
+        const productsGrid = document.getElementById('productsGrid');
+        const productsCount = document.getElementById('productsCount');
+        const applyFiltersBtn = document.getElementById('applyFilters');
+        const resetFiltersBtn = document.getElementById('resetFilters');
+        const sortSelect = document.getElementById('sortSelect');
+        const filterOptions = document.querySelectorAll('.filter-option');
+
+        // Инициализация страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Обработчики для фильтров
+            filterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const input = this.querySelector('input');
+                    input.checked = !input.checked;
+                });
+            });
+
+            applyFiltersBtn.addEventListener('click', applyFilters);
+            resetFiltersBtn.addEventListener('click', resetFilters);
+            sortSelect.addEventListener('change', applyFilters);
+
+            // Изначальное применение фильтров
+            applyFilters();
+        });
+
+        // Функция применения фильтров
+        function applyFilters() {
+            // Получаем выбранные фильтры
+            const selectedCategories = getSelectedFilters('category');
+            const selectedWeights = getSelectedFilters('weight');
+            const selectedChocolates = getSelectedFilters('chocolate');
+            const minPrice = parseInt(document.getElementById('priceMin').value) || 0;
+            const maxPrice = parseInt(document.getElementById('priceMax').value) || 10000;
+            const sortBy = sortSelect.value;
+
+            // Фильтрация товаров
+            let filteredProducts = products.filter(product => {
+                // Фильтр по категории
+                if (selectedCategories.length > 0 && !selectedCategories.includes(product.category)) {
+                    return false;
+                }
+
+                // Фильтр по весу
+                if (selectedWeights.length > 0 && !selectedWeights.includes(product.weight)) {
+                    return false;
+                }
+
+                // Фильтр по типу шоколада
+                if (selectedChocolates.length > 0) {
+                    const hasMatchingChocolate = selectedChocolates.some(choc => 
+                        product.chocolate.includes(choc)
+                    );
+                    if (!hasMatchingChocolate) return false;
+                }
+
+                // Фильтр по цене
+                if (product.price < minPrice || product.price > maxPrice) {
+                    return false;
+                }
+
+                return true;
+            });
+
+            // Сортировка
+            switch(sortBy) {
+                case 'price-asc':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-desc':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'new':
+                    // Для демонстрации - сортируем по ID в обратном порядке
+                    filteredProducts.sort((a, b) => b.id - a.id);
+                    break;
+                case 'popular':
+                default:
+                    filteredProducts.sort((a, b) => b.popular - a.popular);
+                    break;
+            }
+
+            // Отображение результатов
+            displayProducts(filteredProducts);
+        }
+
+        // Функция получения выбранных фильтров
+        function getSelectedFilters(filterType) {
+            const selected = [];
+            document.querySelectorAll(`.filter-option[data-filter="${filterType}"].active`).forEach(option => {
+                selected.push(option.getAttribute('data-value'));
+            });
+            return selected;
+        }
+
+        // Функция сброса фильтров
+        function resetFilters() {
+            // Сбрасываем все чекбоксы
+            document.querySelectorAll('.filter-option').forEach(option => {
+                option.classList.remove('active');
+                option.querySelector('input').checked = false;
+            });
+
+            // Сбрасываем цены
+            document.getElementById('priceMin').value = '500';
+            document.getElementById('priceMax').value = '5000';
+
+            // Сбрасываем сортировку
+            sortSelect.value = 'popular';
+
+            // Применяем фильтры
+            applyFilters();
+        }
+
+        // Функция отображения товаров
+        function displayProducts(productsToShow) {
+            if (productsToShow.length === 0) {
+                productsGrid.innerHTML = '<p class="no-products" style="grid-column: 1/-1; text-align: center; padding: 40px; color: #666;">По вашему запросу товаров не найдено</p>';
+                productsCount.textContent = 'Найдено 0 товаров';
+                return;
+            }
+
+            let html = '';
+            productsToShow.forEach(product => {
+                const badge = product.popular ? '<div class="product-badge">Хит</div>' : '';
+                
+                html += `
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('images/product-${product.id}.jpg')">
+                            ${badge}
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">${product.title}</h3>
+                            <p class="product-description">Описание набора ${product.title.toLowerCase()}</p>
+                            <div class="product-price">${product.price.toLocaleString()} ₽</div>
+                            <button class="product-btn">В корзину</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            productsGrid.innerHTML = html;
+            productsCount.textContent = `Найдено ${productsToShow.length} товаров`;
+        }
+    </script>
+</body>
+</html>

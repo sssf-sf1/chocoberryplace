@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Букеты - Chocoberry Place</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Общие стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #fff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #8a2b3d;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: #d64b6e;
+        }
+        
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Шапка сайта */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #8a2b3d;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: #d64b6e;
+        }
+        
+        .search-cart {
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-right: 20px;
+        }
+        
+        .search-box input {
+            padding: 10px 15px;
+            padding-right: 40px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            width: 250px;
+            font-size: 14px;
+        }
+        
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+        
+        .cart-btn {
+            background-color: #8a2b3d;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+        }
+        
+        .cart-btn:hover {
+            background-color: #a53a52;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .cart-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Навигационное меню */
+        nav {
+            background-color: #f8f0f2;
+            padding: 10px 0;
+        }
+        
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin: 0 15px;
+        }
+        
+        .nav-menu a {
+            color: #8a2b3d;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            background-color: rgba(214, 75, 110, 0.1);
+        }
+        
+        .nav-menu a.active {
+            background-color: rgba(214, 75, 110, 0.2);
+            font-weight: 600;
+        }
+        
+        /* Хлебные крошки */
+        .breadcrumbs {
+            padding: 20px 0;
+            font-size: 14px;
+            color: #777;
+        }
+        
+        .breadcrumbs a {
+            color: #8a2b3d;
+        }
+        
+        .breadcrumbs span {
+            margin: 0 5px;
+        }
+        
+        /* Заголовок страницы */
+        .page-header {
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: 36px;
+            color: #8a2b3d;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #d64b6e;
+        }
+        
+        .page-subtitle {
+            font-size: 18px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Основной контент каталога */
+        .catalog {
+            display: flex;
+            gap: 30px;
+            padding: 30px 0 50px;
+        }
+        
+        /* Фильтры */
+        .filters {
+            width: 280px;
+            flex-shrink: 0;
+        }
+        
+        .filter-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .filter-title {
+            font-size: 18px;
+            color: #8a2b3d;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .filter-options {
+            list-style: none;
+        }
+        
+        .filter-options li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .filter-options input {
+            margin-right: 10px;
+        }
+        
+        .filter-options label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .price-range {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .price-inputs {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .price-inputs input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .apply-filters {
+            background-color: #8a2b3d;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        
+        /* Товары */
+        .products-section {
+            flex: 1;
+        }
+        
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .products-count {
+            color: #666;
+        }
+        
+        .sort-options {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sort-options select {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+        }
+        
+        /* АДАПТИВНАЯ СЕТКА ТОВАРОВ */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 колонки по умолчанию */
+            gap: 25px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: #f9e6eb;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #d64b6e;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #8a2b3d;
+        }
+        
+        .product-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            height: 40px;
+            overflow: hidden;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: #d64b6e;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .product-btn {
+            background-color: #8a2b3d;
+            color: white;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        /* Пагинация */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .pagination-list {
+            display: flex;
+            list-style: none;
+            gap: 10px;
+        }
+        
+        .pagination-item a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            color: #8a2b3d;
+        }
+        
+        .pagination-item.active a {
+            background-color: #8a2b3d;
+            color: white;
+            border-color: #8a2b3d;
+        }
+        
+        .pagination-item a:hover {
+            background-color: rgba(138, 43, 61, 0.1);
+        }
+        
+        /* Подвал */
+        footer {
+            background-color: #8a2b3d;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: #d64b6e;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #f9e6eb;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: #d64b6e;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+        
+        /* МОДАЛЬНОЕ ОКНО */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: modalAppear 0.3s ease-out;
+        }
+        
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            color: #8a2b3d;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .modal-close:hover {
+            color: #d64b6e;
+        }
+        
+        .modal-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .modal-product {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .modal-product-image {
+            width: 200px;
+            height: 200px;
+            background-color: #f9e6eb;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+        
+        .modal-product-info {
+            flex: 1;
+        }
+        
+        .modal-product-title {
+            font-size: 22px;
+            color: #8a2b3d;
+            margin-bottom: 10px;
+        }
+        
+        .modal-product-description {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .quantity-selector {
+            margin: 20px 0;
+        }
+        
+        .quantity-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #8a2b3d;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f8f0f2;
+            color: #8a2b3d;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .quantity-btn:hover {
+            background-color: #e8d0d6;
+        }
+        
+        .quantity-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .quantity-value {
+            font-size: 20px;
+            font-weight: bold;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .price-calculation {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .price-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .price-total {
+            font-size: 22px;
+            font-weight: bold;
+            color: #d64b6e;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .modal-btn-continue {
+            background-color: #f8f0f2;
+            color: #8a2b3d;
+        }
+        
+        .modal-btn-add {
+            background-color: #8a2b3d;
+            color: white;
+        }
+        
+        /* УЛУЧШЕННАЯ АДАПТИВНОСТЬ */
+        @media (max-width: 1200px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr); /* 3 колонки на планшетах */
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .search-box input {
+                width: 200px;
+            }
+            
+            .catalog {
+                flex-direction: column;
+            }
+            
+            .filters {
+                width: 100%;
+            }
+            
+            .filter-sections {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .filter-section {
+                margin-bottom: 0;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 колонки на маленьких планшетах */
+            }
+            
+            .modal-product {
+                flex-direction: column;
+            }
+            
+            .modal-product-image {
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-cart {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+            }
+            
+            .products-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 колонки на мобильных в альбомной ориентации */
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .search-box {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+            
+            .cart-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-menu li {
+                margin: 5px 0;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr; /* 1 колонка на маленьких мобильных */
+            }
+            
+            .page-title {
+                font-size: 28px;
+            }
+            
+            .page-subtitle {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .product-image {
+                height: 180px;
+            }
+            
+            .product-info {
+                padding: 15px;
+            }
+            
+            .product-title {
+                font-size: 16px;
+            }
+            
+            .product-price {
+                font-size: 18px;
+            }
+        }
+        
+        /* Дополнительные улучшения для очень маленьких экранов */
+        @media (max-width: 350px) {
+            .logo {
+                font-size: 24px;
+            }
+            
+            .page-title {
+                font-size: 24px;
+            }
+            
+            .filter-sections {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <i class="fas fa-stroopwafel"></i>
+                   <li><a href="index.html">chocoberry place</a></li>
+                </div>
+                <div class="search-cart">
+                    <div class="search-box">
+                        <input type="text" placeholder="Поиск товаров...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <a href="cart.html" class="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        Корзина
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <nav>
+            <div class="container">
+                <ul class="nav-menu">
+                    <li><a href="set.html">Наборы</a></li>
+                    <li><a href="index.html" class="active">Букеты</a></li>
+                    <li><a href="#">Детям</a></li>
+                    <li><a href="#">Мужчинам</a></li>
+                    <li><a href="#">На 8 марта</a></li>
+                    <li><a href="#">На 14 февраля</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Хлебные крошки -->
+    <div class="container">
+        <div class="breadcrumbs">
+            <a href="index.html">Главная</a> <span>></span> <a href="#">Каталог</a> <span>></span> <span>Букеты</span>
+        </div>
+    </div>
+
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Букеты из клубники в шоколаде</h1>
+            <p class="page-subtitle">Изысканные композиции для особых моментов. Свежая клубника в шоколаде, оформленная в виде цветочных букетов.</p>
+        </div>
+    </section>
+
+    <!-- Основной контент каталога -->
+    <section class="catalog">
+        <div class="container">
+            <div class="catalog-content">
+                <!-- Фильтры -->
+                <aside class="filters">
+                    <div class="filter-sections">
+                        <div class="filter-section">
+                            <h3 class="filter-title">Тип букета</h3>
+                            <ul class="filter-options">
+                                <li>
+                                    <input type="checkbox" id="withFlowers" checked>
+                                    <label for="withFlowers">С цветами</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="withoutFlowers" checked>
+                                    <label for="withoutFlowers">Без цветов</label>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="filter-section">
+                            <h3 class="filter-title">Цена, ₽</h3>
+                            <div class="price-range">
+                                <div class="price-inputs">
+                                    <input type="number" placeholder="От" value="1000">
+                                    <input type="number" placeholder="До" value="8000">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-section">
+                            <h3 class="filter-title">Размер</h3>
+                            <ul class="filter-options">
+                                <li>
+                                    <input type="checkbox" id="sizeSmall">
+                                    <label for="sizeSmall">Маленький (до 15 ягод)</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sizeMedium" checked>
+                                    <label for="sizeMedium">Средний (15-25 ягод)</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sizeLarge">
+                                    <label for="sizeLarge">Большой (более 25 ягод)</label>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="filter-section">
+                            <h3 class="filter-title">Тип шоколада</h3>
+                            <ul class="filter-options">
+                                <li>
+                                    <input type="checkbox" id="chocolate1" checked>
+                                    <label for="chocolate1">Молочный</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="chocolate2" checked>
+                                    <label for="chocolate2">Тёмный</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="chocolate3">
+                                    <label for="chocolate3">Белый</label>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <button class="apply-filters" id="applyFilters">Применить фильтры</button>
+                    </div>
+                </aside>
+                
+                <!-- Товары -->
+                <main class="products-section">
+                    <div class="products-header">
+                        <div class="products-count" id="productsCount">Найдено 12 товаров</div>
+                        <div class="sort-options">
+                            <span>Сортировать:</span>
+                            <select id="sortSelect">
+                                <option value="popular">По популярности</option>
+                                <option value="price-asc">По возрастанию цены</option>
+                                <option value="price-desc">По убыванию цены</option>
+                                <option value="new">По новизне</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="products-grid" id="productsGrid">
+                        <!-- Товары будут добавляться динамически -->
+                    </div>
+                    
+                    <!-- Пагинация -->
+                    <div class="pagination">
+                        <ul class="pagination-list">
+                            <li class="pagination-item"><a href="#"><i class="fas fa-chevron-left"></i></a></li>
+                            <li class="pagination-item active"><a href="#">1</a></li>
+                            <li class="pagination-item"><a href="#">2</a></li>
+                            <li class="pagination-item"><a href="#">3</a></li>
+                            <li class="pagination-item"><a href="#"><i class="fas fa-chevron-right"></i></a></li>
+                        </ul>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно добавления в корзину -->
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Добавление в корзину</h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-product">
+                    <div class="modal-product-image" id="modalProductImage"></div>
+                    <div class="modal-product-info">
+                        <h3 class="modal-product-title" id="modalProductTitle"></h3>
+                        <p class="modal-product-description" id="modalProductDescription"></p>
+                    </div>
+                </div>
+                
+                <div class="quantity-selector">
+                    <h3 class="quantity-title">Выберите количество ягод в букете</h3>
+                    <div class="quantity-controls">
+                        <div class="quantity-btn" id="quantityDecrease">-</div>
+                        <div class="quantity-value" id="quantityValue">15</div>
+                        <div class="quantity-btn" id="quantityIncrease">+</div>
+                    </div>
+                    <p>Минимальное количество: 10 ягод, максимальное: 50 ягод</p>
+                </div>
+                
+                <div class="price-calculation">
+                    <div class="price-line">
+                        <span>Цена за 1 ягоду:</span>
+                        <span>180 ₽</span>
+                    </div>
+                    <div class="price-line">
+                        <span>Количество ягод:</span>
+                        <span id="priceQuantity">15</span>
+                    </div>
+                    <div class="price-line">
+                        <span>Стоимость ягод:</span>
+                        <span id="priceBerries">2700 ₽</span>
+                    </div>
+                    <div class="price-line">
+                        <span>Оформление букета:</span>
+                        <span>500 ₽</span>
+                    </div>
+                    <div class="price-line price-total">
+                        <span>Итого:</span>
+                        <span id="priceTotal">3200 ₽</span>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="modal-btn modal-btn-continue" id="continueShopping">Продолжить покупки</button>
+                    <button class="modal-btn modal-btn-add" id="addToCart">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О нас</h3>
+                    <p>Chocoberry Place — создаём сладкие моменты вашей жизни с 2015 года.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Меню</h3>
+                    <ul>
+                        <li><a href="catalog.html">Наборы</a></li>
+                        <li><a href="#">Букеты</a></li>
+                        <li><a href="#">Детям</a></li>
+                        <li><a href="#">Мужчинам</a></li>
+                        <li><a href="#">На 8 марта</a></li>
+                        <li><a href="#">На 14 февраля</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +7 (495) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@chocoberry.ru</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Сладкая, д. 25</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Часы работы</h3>
+                    <ul>
+                        <li>Пн-Пт: 9:00 - 21:00</li>
+                        <li>Сб-Вс: 10:00 - 20:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Chocoberry Place. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Данные товаров (букетов)
+        const bouquets = [
+            {
+                id: 1,
+                title: "Романтический букет",
+                description: "Элегантная композиция с розами и клубникой в шоколаде",
+                image: "https://via.placeholder.com/300x200/f9e6eb/8a2b3d?text=Романтический+букет",
+                price: 3500,
+                type: "withFlowers",
+                size: "medium",
+                chocolate: ["milk", "dark"],
+                popular: true
+            },
+            {
+                id: 2,
+                title: "Весеннее настроение",
+                description: "Свежий букет с тюльпанами и клубникой в белом шоколаде",
+                image: "https://via.placeholder.com/300x200/f9e6eb/8a2b3d?text=Весеннее+настроение",
+                price: 4200,
+                type: "withFlowers",
+                size: "large",
+                chocolate: ["white"],
+                popular: false
+            },
+            {
+                id: 3,
+                title: "Классический букет",
+                description: "Изысканный букет из клубники в шоколаде без цветов",
+                image: "https://via.placeholder.com/300x200/f9e6eb/8a2b3d?text=Классический+букет",
+                price: 2800,
+                type: "withoutFlowers",
+                size: "small",
+                chocolate: ["milk", "dark"],
+                popular: true
+            },
+            {
+                id: 4,
+                title: "Нежный сюрприз",
+                description: "Букет с хризантемами и клубникой в молочном шоколаде",
+                image: "https://via.placeholder.com/300x200/f9e6eb/8a2b3d?text=Нежный+сюрприз",
+                price: 3800,
+                type: "withFlowers",
+                size: "medium",
+                chocolate: ["milk"],
+                popular: false
+            },
+            {
+                id: 5,
+                title: "Шоколадная феерия",
+                description: "Богатый букет из клубники в трех видах шоколада",
+                image: "https://via.placeholder.com/300x200/f9e6eb/8a2b3d?text=Шоколадная+феерия",
+                price: 5200,
+                type: "withoutFlowers",
+                size: "large",
+                chocolate: ["milk", "dark", "white"],
+                popular: true
+            },
+            {
+                id: 6,
+                title: "Летний бриз",
+                description: "Светлый букет с ромашками и клубникой в белом шоколаде",
+                image: "https://via.placeholder.com/300x200/f9e6eb/8a2b3d?text=Летний+бриз",
+                price: 3200,
+                type: "withFlowers",
+                size: "small",
+                chocolate: ["white"],
+                popular: false
+            },
+            {
+                id: 7,
+                title: "Мини букет",
+                description: "Небольшой изящный букетик для небольшого подарка",
+                image: "https://via.placeholder.com/300x200/f9e6eb/8a2b3d?text=Мини+букет",
+                price: 1900,
+                type: "withoutFlowers",
+                size: "small",
+                chocolate: ["milk"],
+                popular: false
+            },
+            {
+                id: 8,
+                title: "Королевский букет",
+                description: "Роскошная композиция с орхидеями и клубникой премиум класса",
+                image: "https://via.placeholder.com/300x200/f9e6eb/8a2b3d?text=Королевский+букет",
+                price: 6500,
+                type: "withFlowers",
+                size: "large",
+                chocolate: ["dark"],
+                popular: true
+            }
+        ];
+
+        // Переменные для управления модальным окном
+        let currentProduct = null;
+        let currentQuantity = 15;
+        const minQuantity = 10;
+        const maxQuantity = 50;
+        const pricePerBerry = 180;
+        const bouquetCost = 500;
+        
+        // Элементы DOM
+        const productsGrid = document.getElementById('productsGrid');
+        const productsCount = document.getElementById('productsCount');
+        const applyFiltersBtn = document.getElementById('applyFilters');
+        const sortSelect = document.getElementById('sortSelect');
+        
+        // Элементы модального окна
+        const modalOverlay = document.getElementById('cartModal');
+        const modalClose = document.getElementById('modalClose');
+        const continueShopping = document.getElementById('continueShopping');
+        const addToCart = document.getElementById('addToCart');
+        const quantityDecrease = document.getElementById('quantityDecrease');
+        const quantityIncrease = document.getElementById('quantityIncrease');
+        const quantityValue = document.getElementById('quantityValue');
+        
+        // Элементы для отображения информации о товаре
+        const modalProductImage = document.getElementById('modalProductImage');
+        const modalProductTitle = document.getElementById('modalProductTitle');
+        const modalProductDescription = document.getElementById('modalProductDescription');
+        
+        // Элементы для отображения цены
+        const priceQuantity = document.getElementById('priceQuantity');
+        const priceBerries = document.getElementById('priceBerries');
+        const priceTotal = document.getElementById('priceTotal');
+        
+        // Инициализация страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts(bouquets);
+            
+            // Обработчики событий
+            applyFiltersBtn.addEventListener('click', applyFilters);
+            sortSelect.addEventListener('change', applyFilters);
+            
+            // Обработчики для модального окна
+            modalClose.addEventListener('click', closeModal);
+            continueShopping.addEventListener('click', closeModal);
+            addToCart.addEventListener('click', addProductToCart);
+            
+            // Обработчики для изменения количества
+            quantityDecrease.addEventListener('click', decreaseQuantity);
+            quantityIncrease.addEventListener('click', increaseQuantity);
+            
+            // Закрытие модального окна при клике вне его области
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === modalOverlay) {
+                    closeModal();
+                }
+            });
+        });
+        
+        // Функция отрисовки товаров
+        function renderProducts(products) {
+            if (products.length === 0) {
+                productsGrid.innerHTML = '<p class="no-products">По вашему запросу товаров не найдено</p>';
+                productsCount.textContent = 'Найдено 0 товаров';
+                return;
+            }
+            
+            let html = '';
+            products.forEach(product => {
+                const badge = product.popular ? '<div class="product-badge">Хит</div>' : '';
+                
+                html += `
+                    <div class="product-card" data-id="${product.id}">
+                        <div class="product-image" style="background-image: url('${product.image}')">
+                            ${badge}
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">${product.title}</h3>
+                            <p class="product-description">${product.description}</p>
+                            <div class="product-price">${product.price} ₽</div>
+                            <button class="product-btn" data-product='${JSON.stringify(product)}'>В корзину</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            productsGrid.innerHTML = html;
+            productsCount.textContent = `Найдено ${products.length} товаров`;
+            
+            // Добавляем обработчики для кнопок "В корзину"
+            document.querySelectorAll('.product-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productData = JSON.parse(this.getAttribute('data-product'));
+                    openModal(productData);
+                });
+            });
+        }
+        
+        // Функция применения фильтров
+        function applyFilters() {
+            const withFlowers = document.getElementById('withFlowers').checked;
+            const withoutFlowers = document.getElementById('withoutFlowers').checked;
+            const minPrice = parseInt(document.getElementById('priceMin').value) || 1000;
+            const maxPrice = parseInt(document.getElementById('priceMax').value) || 8000;
+            const sizeSmall = document.getElementById('sizeSmall').checked;
+            const sizeMedium = document.getElementById('sizeMedium').checked;
+            const sizeLarge = document.getElementById('sizeLarge').checked;
+            const milkChocolate = document.getElementById('chocolate1').checked;
+            const darkChocolate = document.getElementById('chocolate2').checked;
+            const whiteChocolate = document.getElementById('chocolate3').checked;
+            const sortBy = sortSelect.value;
+            
+            let filteredProducts = bouquets.filter(product => {
+                // Фильтр по типу букета
+                if (withFlowers && withoutFlowers) {
+                    // Показываем все
+                } else if (withFlowers && product.type !== 'withFlowers') {
+                    return false;
+                } else if (withoutFlowers && product.type !== 'withoutFlowers') {
+                    return false;
+                } else if (!withFlowers && !withoutFlowers) {
+                    return false;
+                }
+                
+                // Фильтр по цене
+                if (product.price < minPrice || product.price > maxPrice) {
+                    return false;
+                }
+                
+                // Фильтр по размеру
+                if (!sizeSmall && !sizeMedium && !sizeLarge) {
+                    // Ничего не выбрано - показываем все
+                } else {
+                    if (sizeSmall && product.size === 'small') return true;
+                    if (sizeMedium && product.size === 'medium') return true;
+                    if (sizeLarge && product.size === 'large') return true;
+                    return false;
+                }
+                
+                // Фильтр по типу шоколада
+                if (!milkChocolate && !darkChocolate && !whiteChocolate) {
+                    // Ничего не выбрано - показываем все
+                } else {
+                    let hasChocolate = false;
+                    if (milkChocolate && product.chocolate.includes('milk')) hasChocolate = true;
+                    if (darkChocolate && product.chocolate.includes('dark')) hasChocolate = true;
+                    if (whiteChocolate && product.chocolate.includes('white')) hasChocolate = true;
+                    if (!hasChocolate) return false;
+                }
+                
+                return true;
+            });
+            
+            // Сортировка
+            switch(sortBy) {
+                case 'price-asc':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-desc':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'new':
+                    // Для демонстрации - сортируем по ID в обратном порядке
+                    filteredProducts.sort((a, b) => b.id - a.id);
+                    break;
+                case 'popular':
+                default:
+                    filteredProducts.sort((a, b) => b.popular - a.popular);
+                    break;
+            }
+            
+            renderProducts(filteredProducts);
+        }
+        
+        // Функция открытия модального окна
+        function openModal(product) {
+            currentProduct = product;
+            currentQuantity = 15;
+            
+            // Заполняем информацию о товаре
+            modalProductImage.style.backgroundImage = `url('${product.image}')`;
+            modalProductTitle.textContent = product.title;
+            modalProductDescription.textContent = product.description;
+            
+            // Обновляем количество и цену
+            updateQuantityDisplay();
+            updatePrice();
+            
+            // Показываем модальное окно
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Функция закрытия модального окна
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Функция уменьшения количества
+        function decreaseQuantity() {
+            if (currentQuantity > minQuantity) {
+                currentQuantity--;
+                updateQuantityDisplay();
+                updatePrice();
+            }
+        }
+        
+        // Функция увеличения количества
+        function increaseQuantity() {
+            if (currentQuantity < maxQuantity) {
+                currentQuantity++;
+                updateQuantityDisplay();
+                updatePrice();
+            }
+        }
+        
+        // Функция обновления отображения количества
+        function updateQuantityDisplay() {
+            quantityValue.textContent = currentQuantity;
+            
+            // Обновляем состояние кнопок
+            quantityDecrease.classList.toggle('disabled', currentQuantity <= minQuantity);
+            quantityIncrease.classList.toggle('disabled', currentQuantity >= maxQuantity);
+        }
+        
+        // Функция расчета и обновления цены
+        function updatePrice() {
+            const berriesCost = currentQuantity * pricePerBerry;
+            const totalCost = berriesCost + bouquetCost;
+            
+            priceQuantity.textContent = currentQuantity;
+            priceBerries.textContent = `${berriesCost} ₽`;
+            priceTotal.textContent = `${totalCost} ₽`;
+        }
+        
+        // Функция добавления товара в корзину
+        function addProductToCart() {
+            if (!currentProduct) return;
+            
+            const berriesCost = currentQuantity * pricePerBerry;
+            const totalCost = berriesCost + bouquetCost;
+            
+            // Создаем объект товара для корзины
+            const cartItem = {
+                id: currentProduct.id,
+                title: currentProduct.title,
+                description: currentProduct.description,
+                image: currentProduct.image,
+                quantity: currentQuantity,
+                pricePerBerry: pricePerBerry,
+                bouquetCost: bouquetCost,
+                totalCost: totalCost
+            };
+            
+            // В реальном приложении здесь будет сохранение в localStorage или отправка на сервер
+            console.log('Товар добавлен в корзину:', cartItem);
+            
+            // Показываем уведомление
+            alert(`Букет "${currentProduct.title}" добавлен в корзину! Количество: ${currentQuantity} ягод. Общая стоимость: ${totalCost} ₽`);
+            
+            // Закрываем модальное окно
+            closeModal();
+        }
+    </script>
+</body>
+</html>

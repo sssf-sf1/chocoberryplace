@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина - Chocoberry Place</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <i class="fas fa-stroopwafel"></i>
+                 <li><a href="index.html">chocoberry place</a></li>
+                </div>
+                <div class="search-cart">
+                    <div class="search-box">
+                        <input type="text" placeholder="Поиск товаров...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <a href="index.html" class="cart-btn">
+                        <i class="fas fa-arrow-left"></i>
+                        Назад в магазин
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <nav>
+            <div class="container">
+                <ul class="nav-menu">
+                    <li><a href="#">Наборы</a></li>
+                    <li><a href="#">Букеты</a></li>
+                    <li><a href="#">Детям</a></li>
+                    <li><a href="#">Мужчинам</a></li>
+                    <li><a href="#">На 8 марта</a></li>
+                    <li><a href="#">На 14 февраля</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Хлебные крошки -->
+    <div class="container">
+        <div class="breadcrumbs">
+            <a href="index.html">Главная</a> <span>></span> <span>Корзина</span>
+        </div>
+    </div>
+
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Корзина</h1>
+        </div>
+    </section>
+
+    <!-- Основной контент корзины -->
+    <section class="cart-content">
+        <div class="container">
+            <div class="cart-content-wrapper">
+                <!-- Товары в корзине -->
+                <div class="cart-items" id="cartItems">
+                    <!-- Товары будут добавляться динамически -->
+                </div>
+                
+                <!-- Боковая панель с заказом -->
+                <div class="order-summary">
+                    <h2 class="order-title">Ваш заказ</h2>
+                    
+                    <div class="delivery-options">
+                        <h3 class="delivery-title">Способ получения</h3>
+                        <div class="delivery-option">
+                            <input type="radio" id="pickup" name="delivery" value="pickup" checked>
+                            <label for="pickup">Самовывоз (бесплатно)</label>
+                        </div>
+                        <div class="delivery-option">
+                            <input type="radio" id="delivery" name="delivery" value="delivery">
+                            <label for="delivery">Доставка (+350 ₽)</label>
+                        </div>
+                    </div>
+                    
+                    <div class="order-details">
+                        <div class="order-line">
+                            <span>Товары:</span>
+                            <span id="itemsTotal">0 ₽</span>
+                        </div>
+                        <div class="order-line">
+                            <span>Доставка:</span>
+                            <span id="deliveryCost">0 ₽</span>
+                        </div>
+                        <div class="order-line order-total">
+                            <span>Итого:</span>
+                            <span id="orderTotal">0 ₽</span>
+                        </div>
+                    </div>
+                    
+                    <button class="checkout-btn" id="checkoutBtn">Оформить заказ</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно оформления заказа -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Оформление заказа</h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="orderForm">
+                    <div class="form-section">
+                        <h3 class="form-title">Информация о заказчике</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="customerName">ФИО</label>
+                                <input type="text" id="customerName" class="form-input" placeholder="Иванов Иван Иванович">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="customerPhone">Телефон</label>
+                                <input type="tel" id="customerPhone" class="form-input" placeholder="+7 (999) 999-99-99">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3 class="form-title">Информация о получателе <span class="required">(обязательно)</span></h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required" for="recipientName">ФИО получателя</label>
+                                <input type="text" id="recipientName" class="form-input" required placeholder="Иванов Иван Иванович">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required" for="recipientPhone">Телефон получателя</label>
+                                <input type="tel" id="recipientPhone" class="form-input" required placeholder="+7 (999) 999-99-99">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section" id="deliveryAddressSection">
+                        <h3 class="form-title">Адрес доставки</h3>
+                        <div class="form-group">
+                            <label class="form-label required" for="deliveryAddress">Адрес</label>
+                            <input type="text" id="deliveryAddress" class="form-input" placeholder="г. Москва, ул. Примерная, д. 1, кв. 1">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3 class="form-title">Время получения</h3>
+                        <div class="form-group">
+                            <label class="form-label required" for="deliveryTime">Выберите время</label>
+                            <div class="time-options" id="timeOptions">
+                                <!-- Временные слоты будут генерироваться динамически -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="button" class="modal-btn modal-btn-back" id="backToCart">Назад в корзину</button>
+                        <button type="submit" class="modal-btn modal-btn-submit">Подтвердить заказ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О нас</h3>
+                    <p>Chocoberry Place — создаём сладкие моменты вашей жизни с 2015 года.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Меню</h3>
+                    <ul>
+                        <li><a href="#">Наборы</a></li>
+                        <li><a href="#">Букеты</a></li>
+                        <li><a href="#">Детям</a></li>
+                        <li><a href="#">Мужчинам</a></li>
+                        <li><a href="#">На 8 марта</a></li>
+                        <li><a href="#">На 14 февраля</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +7 (495) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@chocoberry.ru</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Сладкая, д. 25</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Часы работы</h3>
+                    <ul>
+                        <li>Пн-Пт: 9:00 - 21:00</li>
+                        <li>Сб-Вс: 10:00 - 20:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Chocoberry Place. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Данные корзины (в реальном приложении будут браться из localStorage или сервера)
+        let cartItems = [
+            {
+                id: 1,
+                title: "Романтический сюрприз",
+                description: "Нежный набор с клубникой в молочном и тёмном шоколаде",
+                image: "https://via.placeholder.com/300x200/f9e6eb/8a2b3d?text=Романтический+сюрприз",
+                quantity: 3,
+                pricePerBerry: 170,
+                additionalCost: 20,
+                totalCost: 530
+            },
+            {
+                id: 2,
+                title: "Сладкое наслаждение",
+                description: "Набор с клубникой в белом шоколаде и кокосовой стружке",
+                image: "https://via.placeholder.com/300x200/f9e6eb/8a2b3d?text=Сладкое+наслаждение",
+                quantity: 5,
+                pricePerBerry: 170,
+                additionalCost: 20,
+                totalCost: 870
+            }
+        ];
+        
+        // Переменные для управления корзиной
+        const deliveryCost = 350;
+        let selectedDelivery = 'pickup';
+        let selectedTime = null;
+        
+        // Элементы DOM
+        const cartItemsContainer = document.getElementById('cartItems');
+        const itemsTotalElement = document.getElementById('itemsTotal');
+        const deliveryCostElement = document.getElementById('deliveryCost');
+        const orderTotalElement = document.getElementById('orderTotal');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const orderModal = document.getElementById('orderModal');
+        const modalClose = document.getElementById('modalClose');
+        const backToCart = document.getElementById('backToCart');
+        const orderForm = document.getElementById('orderForm');
+        const deliveryAddressSection = document.getElementById('deliveryAddressSection');
+        const timeOptionsContainer = document.getElementById('timeOptions');
+        
+        // Инициализация корзины
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCartItems();
+            updateOrderSummary();
+            generateTimeSlots();
+            
+            // Обработчики событий
+            checkoutBtn.addEventListener('click', openOrderModal);
+            modalClose.addEventListener('click', closeOrderModal);
+            backToCart.addEventListener('click', closeOrderModal);
+            orderForm.addEventListener('submit', submitOrder);
+            
+            // Обработчики для выбора способа доставки
+            document.querySelectorAll('input[name="delivery"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    selectedDelivery = this.value;
+                    updateOrderSummary();
+                    toggleDeliveryAddress();
+                });
+            });
+            
+            // Изначально скрываем адрес доставки
+            toggleDeliveryAddress();
+        });
+        
+        // Функция отрисовки товаров в корзине
+        function renderCartItems() {
+            if (cartItems.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="empty-cart">
+                        <div class="empty-cart-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <p class="empty-cart-text">Ваша корзина пуста</p>
+                        <a href="index.html" class="continue-shopping">Продолжить покупки</a>
+                    </div>
+                `;
+                checkoutBtn.disabled = true;
+                return;
+            }
+            
+            let html = '';
+            cartItems.forEach(item => {
+                html += `
+                    <div class="cart-item" data-id="${item.id}">
+                        <div class="cart-item-image" style="background-image: url('${item.image}')"></div>
+                        <div class="cart-item-info">
+                            <h3 class="cart-item-title">${item.title}</h3>
+                            <p class="cart-item-description">${item.description}</p>
+                            <div class="cart-item-details">
+                                <div class="cart-item-quantity">
+                                    <div class="quantity-btn ${item.quantity <= 3 ? 'disabled' : ''}" data-action="decrease" data-id="${item.id}">-</div>
+                                    <div class="quantity-value">${item.quantity}</div>
+                                    <div class="quantity-btn ${item.quantity >= 30 ? 'disabled' : ''}" data-action="increase" data-id="${item.id}">+</div>
+                                    <span>ягод</span>
+                                </div>
+                                <div class="cart-item-price">${item.totalCost} ₽</div>
+                                <button class="cart-item-remove" data-id="${item.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            cartItemsContainer.innerHTML = html;
+            
+            // Добавляем обработчики для кнопок изменения количества и удаления
+            document.querySelectorAll('.quantity-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (this.classList.contains('disabled')) return;
+                    
+                    const itemId = parseInt(this.getAttribute('data-id'));
+                    const action = this.getAttribute('data-action');
+                    updateItemQuantity(itemId, action);
+                });
+            });
+            
+            document.querySelectorAll('.cart-item-remove').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const itemId = parseInt(this.getAttribute('data-id'));
+                    removeItemFromCart(itemId);
+                });
+            });
+        }
+        
+        // Функция обновления количества товара
+        function updateItemQuantity(itemId, action) {
+            const itemIndex = cartItems.findIndex(item => item.id === itemId);
+            if (itemIndex === -1) return;
+            
+            if (action === 'increase' && cartItems[itemIndex].quantity < 30) {
+                cartItems[itemIndex].quantity++;
+            } else if (action === 'decrease' && cartItems[itemIndex].quantity > 3) {
+                cartItems[itemIndex].quantity--;
+            } else {
+                return;
+            }
+            
+            // Пересчитываем стоимость
+            cartItems[itemIndex].totalCost = 
+                (cartItems[itemIndex].quantity * cartItems[itemIndex].pricePerBerry) + 
+                cartItems[itemIndex].additionalCost;
+            
+            // Сохраняем в localStorage (в реальном приложении)
+            // localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            
+            // Обновляем отображение
+            renderCartItems();
+            updateOrderSummary();
+        }
+        
+        // Функция удаления товара из корзины
+        function removeItemFromCart(itemId) {
+            cartItems = cartItems.filter(item => item.id !== itemId);
+            
+            // Сохраняем в localStorage (в реальном приложении)
+            // localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            
+            // Обновляем отображение
+            renderCartItems();
+            updateOrderSummary();
+        }
+        
+        // Функция обновления итоговой суммы заказа
+        function updateOrderSummary() {
+            const itemsTotal = cartItems.reduce((total, item) => total + item.totalCost, 0);
+            const delivery = selectedDelivery === 'delivery' ? deliveryCost : 0;
+            const orderTotal = itemsTotal + delivery;
+            
+            itemsTotalElement.textContent = `${itemsTotal} ₽`;
+            deliveryCostElement.textContent = `${delivery} ₽`;
+            orderTotalElement.textContent = `${orderTotal} ₽`;
+            
+            // Блокируем кнопку оформления заказа, если корзина пуста
+            checkoutBtn.disabled = cartItems.length === 0;
+        }
+        
+        // Функция переключения отображения адреса доставки
+        function toggleDeliveryAddress() {
+            if (selectedDelivery === 'delivery') {
+                deliveryAddressSection.style.display = 'block';
+                document.getElementById('deliveryAddress').required = true;
+            } else {
+                deliveryAddressSection.style.display = 'none';
+                document.getElementById('deliveryAddress').required = false;
+            }
+        }
+        
+        // Функция генерации временных слотов
+        function generateTimeSlots() {
+            const now = new Date();
+            const startTime = new Date(now.getTime() + 60 * 60 * 1000); // Через час от текущего времени
+            
+            // Округляем до ближайших 30 минут
+            const minutes = startTime.getMinutes();
+            if (minutes < 30) {
+                startTime.setMinutes(30);
+            } else {
+                startTime.setHours(startTime.getHours() + 1);
+                startTime.setMinutes(0);
+            }
+            
+            let html = '';
+            for (let i = 0; i < 8; i++) {
+                const time = new Date(startTime.getTime() + i * 30 * 60 * 1000);
+                const timeString = time.toLocaleTimeString('ru-RU', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+                
+                html += `
+                    <div class="time-option" data-time="${time.toISOString()}">
+                        ${timeString}
+                    </div>
+                `;
+            }
+            
+            timeOptionsContainer.innerHTML = html;
+            
+            // Добавляем обработчики для выбора времени
+            document.querySelectorAll('.time-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.time-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    selectedTime = this.getAttribute('data-time');
+                });
+            });
+            
+            // Выбираем первый слот по умолчанию
+            if (timeOptionsContainer.firstElementChild) {
+                timeOptionsContainer.firstElementChild.classList.add('selected');
+                selectedTime = timeOptionsContainer.firstElementChild.getAttribute('data-time');
+            }
+        }
+        
+        // Функция открытия модального окна оформления заказа
+        function openOrderModal() {
+            if (cartItems.length === 0) return;
+            orderModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Функция закрытия модального окна оформления заказа
+        function closeOrderModal() {
+            orderModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Функция отправки заказа
+        function submitOrder(e) {
+            e.preventDefault();
+            
+            // Проверяем обязательные поля
+            const recipientName = document.getElementById('recipientName').value;
+            const recipientPhone = document.getElementById('recipientPhone').value;
+            
+            if (!recipientName || !recipientPhone) {
+                alert('Пожалуйста, заполните обязательные поля для получателя');
+                return;
+            }
+            
+            if (selectedDelivery === 'delivery') {
+                const deliveryAddress = document.getElementById('deliveryAddress').value;
+                if (!deliveryAddress) {
+                    alert('Пожалуйста, укажите адрес доставки');
+                    return;
+                }
+            }
+            
+            if (!selectedTime) {
+                alert('Пожалуйста, выберите время получения');
+                return;
+            }
+            
+            // Собираем данные заказа
+            const orderData = {
+                customer: {
+                    name: document.getElementById('customerName').value,
+                    phone: document.getElementById('customerPhone').value
+                },
+                recipient: {
+                    name: recipientName,
+                    phone: recipientPhone
+                },
+                delivery: {
+                    type: selectedDelivery,
+                    address: selectedDelivery === 'delivery' ? document.getElementById('deliveryAddress').value : null,
+                    time: selectedTime
+                },
+                items: cartItems,
+                total: calculateOrderTotal()
+            };
+            
+            // В реальном приложении здесь будет отправка на сервер
+            console.log('Заказ оформлен:', orderData);
+            
+            // Показываем уведомление
+            alert('Ваш заказ успешно оформлен! С вами свяжутся для подтверждения.');
+            
+            // Очищаем корзину
+            cartItems = [];
+            renderCartItems();
+            updateOrderSummary();
+            
+            // Закрываем модальное окно
+            closeOrderModal();
+        }
+        
+        // Функция расчета общей суммы заказа
+        function calculateOrderTotal() {
+            const itemsTotal = cartItems.reduce((total, item) => total + item.totalCost, 0);
+            const delivery = selectedDelivery === 'delivery' ? deliveryCost : 0;
+            return itemsTotal + delivery;
+        }
+    </script>
+</body>
+</html>
